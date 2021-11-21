@@ -19,7 +19,7 @@ export class SignInComponent implements OnInit {
 
   LogIn(value: User) {
     this.userService.LoginIn(value).subscribe((response: Response) => {
-      if (response.message == false){
+      if (response.message === 'false'){
         this.toastr.error('E-mail ou mot de passe incorrect');
 
       }else{
