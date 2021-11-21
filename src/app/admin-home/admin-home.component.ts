@@ -1,29 +1,57 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee } from './employee';
-import { EmployeeService } from './employee.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { NgForm } from '@angular/forms';
+import {Employee} from "../employee";
+import {EmployeeService} from "../employee.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {NgForm} from "@angular/forms";
+import {Response} from "../model/Response";
+import {Ad} from "../model/Ad";
+import {AdService} from "../services/ad.service";
+import {UserService} from "../services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-admin-home',
+  templateUrl: './admin-home.component.html',
+  styleUrls: ['./admin-home.component.css']
 })
-export class AppComponent implements OnInit {
+export class AdminHomeComponent implements OnInit {
+  public annonces: Ad[];
   public employees: Employee[];
   public editEmployee: Employee;
   public deleteEmployee: Employee;
 
-  constructor(private employeeService: EmployeeService){}
+  constructor(private employeeService: EmployeeService, private adService: AdService, private router: Router){}
 
   ngOnInit() {
+   this.getAnnonces()
+  }
 
+
+  public getAnnonces(): void {
+    this.adService.getAnnonces().subscribe(
+      (response: Response) => {
+        console.log(response.data as Ad[])
+        this.annonces = response.data as Ad[];
+
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 
   public getEmployees(): void {
     this.employeeService.getEmployees().subscribe(
       (response: Employee[]) => {
-        this.employees = response;
+        this.employees = [{
+          id: 1, name: '', email : '', jobTitle: '', phone: '', imageUrl: '', employeeCode: ''
+        },
+          {
+            id: 2, name: '', email : '', jobTitle: '', phone: '', imageUrl: '', employeeCode: ''
+          },
+          {
+            id: 3, name: '', email : '', jobTitle: '', phone: '', imageUrl: '', employeeCode: ''
+          } ];
         console.log(this.employees);
       },
       (error: HttpErrorResponse) => {
@@ -59,11 +87,16 @@ export class AppComponent implements OnInit {
     );
   }
 
+  logout(){
+    localStorage.removeItem("idUser");
+    this.router.navigateByUrl('/feed');
+  }
+
   public onDeleteEmloyee(employeeId: number): void {
-    this.employeeService.deleteEmployee(employeeId).subscribe(
-      (response: void) => {
+    this.adService.deleteAd(employeeId).subscribe(
+      (response: Response) => {
         console.log(response);
-        this.getEmployees();
+        this.getAnnonces()
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -76,9 +109,9 @@ export class AppComponent implements OnInit {
     const results: Employee[] = [];
     for (const employee of this.employees) {
       if (employee.name.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || employee.email.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || employee.phone.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || employee.jobTitle.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+        || employee.email.toLowerCase().indexOf(key.toLowerCase()) !== -1
+        || employee.phone.toLowerCase().indexOf(key.toLowerCase()) !== -1
+        || employee.jobTitle.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
         results.push(employee);
       }
     }
@@ -108,7 +141,4 @@ export class AppComponent implements OnInit {
     container.appendChild(button);
     button.click();
   }
-
-
-
 }

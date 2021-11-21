@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" style="color:white;">E3lani</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor02">
+    <ul class="navbar-nav mr-auto">
+
+    </ul>
+
+    <form class="form-inline my-2 my-lg-0">
+      <button type="button" (click)="goToSignIn()" class="btn btn-success">S'identifier</button>
+
+    </form>
+  <form class="form-inline my-2 my-lg-0">
+    <button type="button" (click)="goToSignUp()" class="btn btn-primary">S'inscrire</button>
+
+  </form>
+  </div>
+</nav>
+<div class="container" id="main-container">
+  <div class="form-outline mb-4">
+    <label class="form-label" for="datatable-search-input">Recherche d'annonces</label>
+    <input type="search" class="form-control" id="datatable-search-input" placeholder="Recherche d'annonces">
+
+  </div>
+  <div class="row">
+
+    <div *ngFor="let employee of annonces" class="col-md-6 col-xl-6">
+      <div class="d-flex justify-content-center container mt-5">
+        <div class="card p-3 bg-white" style="width: 444pt"><i class="fa fa-apple"></i>
+          <div class="about-product text-center mt-2"><img src="{{employee.image}}" width="300">
+            <div>
+              <h4>{{employee.nom}}</h4>
+              <h6 class="mt-0 text-black-50">{{employee.description}}</h6>
+            </div>
+          </div>
+          <div class="stats mt-2">
+            <div class="d-flex justify-content-between p-price"><span>Catégorie</span><span>{{employee.categorie}}</span></div>
+          </div>
+          <div class="d-flex justify-content-between total font-weight-bold mt-4"><span>Prix</span><span>{{employee.prix}}</span></div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+<div *ngIf="annonces?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+  <div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">NO EMPLOYEES!</h4>
+    <p>No Employees were found.</p>
+  </div>
+</div>
+
