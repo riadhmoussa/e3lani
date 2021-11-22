@@ -8,6 +8,7 @@ import {Response} from '../model/Response';
 import {Ad} from '../model/Ad';
 import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
+import {SearchadPipe} from "../pipes/searchad.pipe";
 
 @Component({
   selector: 'app-feed',
@@ -18,6 +19,7 @@ export class FeedComponent implements OnInit {
   public annonces: Ad[];
   public editEmployee: Employee;
   public deleteEmployee: Employee;
+  queryString: any;
 
   constructor(private adService: AdService, private router: Router){}
 
@@ -49,3 +51,4 @@ export class FeedComponent implements OnInit {
 
 
 }
+

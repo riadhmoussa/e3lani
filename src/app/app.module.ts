@@ -13,6 +13,7 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
+import { SearchadPipe } from './pipes/searchad.pipe';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ToastrModule } from 'ngx-toastr';
     HomeComponent,
     FeedComponent,
     AdminHomeComponent,
+    SearchadPipe,
 
   ],
   imports: [

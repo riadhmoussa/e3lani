@@ -22,12 +22,12 @@
 <div class="container" id="main-container">
   <div class="form-outline mb-4">
     <label class="form-label" for="datatable-search-input">Recherche d'annonces</label>
-    <input type="search" class="form-control" id="datatable-search-input" placeholder="Recherche d'annonces">
+    <input type="text"  [(ngModel)]="queryString" class="form-control" id="datatable-search-input" placeholder="Recherche d'annonces">
 
   </div>
   <div class="row">
 
-    <div *ngFor="let employee of annonces" class="col-md-6 col-xl-6">
+    <div *ngFor="let employee of annonces | searchad : queryString " class="col-md-6 col-xl-6">
       <div class="d-flex justify-content-center container mt-5">
         <div class="card p-3 bg-white" style="width: 444pt"><i class="fa fa-apple"></i>
           <div class="about-product text-center mt-2"><img src="{{employee.image}}" width="300">
